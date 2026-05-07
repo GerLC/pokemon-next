@@ -1,0 +1,168 @@
+"use client";
+
+import { Search } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransition } from "react";
+import { useInView } from "react-intersection-observer";
+import { usePokemonList } from "../hooks/use-pokemon";
+import { PokemonCard } from "./PokemonCard";
+
+export function PokemonListRoot() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  const currentSearchTerm = searchParams.get("query") ?? "";
+  const {
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    allLoaded,
+    filtered,
+    totalCount,
+    isSearching,
+    isSearchingGlobal,
+  } = usePokemonList(currentSearchTerm);
+
+  const { ref } = useInView({
+    onChange: (inView) => {
+      if (inView && hasNextPage && !isFetchingNextPage && !isSearching) {
+        fetchNextPage();
+      }
+    },
+  });
+
+  const handleSearch = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    });
+  };
+
+  if (
+    isLoading ||
+    (isSearching && isSearchingGlobal && filtered.length === 0)
+  ) {
+    return <PokemonListSkeleton />;
+  }
+
+  return (
+    <div className="w-full max-w-7xl mx-auto px-6 py-10">
+      <div className="relative mb-12 max-w-xl mx-auto">
+        <div className="relative flex items-center">
+          <Search className="absolute left-5 w-5 h-5 text-on-surface-subtle" />
+          <input
+            type="text"
+            placeholder="Search Pokémon..."
+            defaultValue={currentSearchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full bg-surface-card border border-border rounded-[var(--radius-button)] py-4 pl-14 pr-6 text-on-surface placeholder:text-on-surface-subtle focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all text-sm"
+          />
+          {isPending && (
+            <div className="absolute right-5">
+              <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+            </div>
+          )}
+        </div>
+        <div className="mt-3 flex justify-between px-1 items-center">
+          {isSearchingGlobal ? (
+            <span className="text-[10px] uppercase tracking-widest font-bold text-primary animate-pulse">
+              Searching global database...
+            </span>
+          ) : (
+            <div />
+          )}
+          <span className="text-xs text-on-surface-subtle font-medium">
+            {isSearching ? (
+              <>{filtered.length} matches found</>
+            ) : (
+              <>
+                {allLoaded.length} of {totalCount} Pokémon
+              </>
+            )}
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filtered.map((pokemon) => (
+          <PokemonCard
+            key={pokemon.name}
+            name={pokemon.name}
+            id={pokemon.id}
+            imageUrl={pokemon.imageUrl}
+          />
+        ))}
+      </div>
+
+      {hasNextPage && !isSearching && (
+        <div
+          ref={ref}
+          className="flex flex-col items-center justify-center mt-16 gap-3"
+        >
+          {isFetchingNextPage ? (
+            <LoadingBounce />
+          ) : (
+            <div className="w-px h-10 bg-gradient-to-b from-transparent via-border to-transparent" />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LoadingBounce() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex gap-1.5">
+        {["b1", "b2", "b3"].map((id, i) => (
+          <div
+            key={id}
+            className="w-2.5 h-2.5 rounded-full bg-primary"
+            style={{
+              animation: `pokemon-bounce 0.6s ease-in-out ${i * 0.15}s infinite`,
+            }}
+          />
+        ))}
+      </div>
+      <span className="text-xs text-on-surface-subtle">
+        Finding more Pokémon...
+      </span>
+    </div>
+  );
+}
+
+function PokemonListSkeleton() {
+  const skeletonIds = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
+  return (
+    <div className="w-full max-w-7xl mx-auto px-6 py-10">
+      <div className="mb-12 max-w-xl mx-auto">
+        <div className="h-14 bg-surface-card border border-border rounded-[var(--radius-button)] animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {skeletonIds.map((id) => (
+          <div
+            key={id}
+            className="bg-surface-card border border-border rounded-[var(--radius-card)] p-5 animate-pulse"
+          >
+            <div className="flex justify-between mb-4">
+              <div className="h-4 w-10 bg-border rounded" />
+              <div className="w-2 h-2 bg-border rounded-full" />
+            </div>
+            <div className="w-36 h-36 mx-auto mb-4 bg-border/50 rounded-full" />
+            <div className="border-t border-border pt-3">
+              <div className="h-4 w-20 bg-border rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

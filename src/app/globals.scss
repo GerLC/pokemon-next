@@ -1,0 +1,99 @@
+@use "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+
+  --color-surface: #faf7f5;
+  --color-surface-dim: #e8e4e1;
+  --color-surface-card: #ffffff;
+  --color-surface-elevated: #ffffff;
+
+  --color-on-surface: #2d2926;
+  --color-on-surface-muted: #78716c;
+  --color-on-surface-subtle: #a8a29e;
+
+  --color-primary: #e63946;
+  --color-primary-soft: #fee2e2;
+  --color-primary-hover: #dc2626;
+  --color-on-primary: #ffffff;
+
+  --color-accent: #f59e0b;
+  --color-accent-soft: #fef3c7;
+  --color-on-accent: #451a03;
+
+  --color-sky: #38bdf8;
+  --color-grass: #4ade80;
+  --color-fire: #fb923c;
+  --color-electric: #facc15;
+  --color-water: #60a5fa;
+  --color-psychic: #f472b6;
+
+  --color-border: #e7e5e4;
+  --color-border-strong: #d6d3d1;
+  --color-overlay: rgba(0, 0, 0, 0.04);
+
+  --spacing-header: 4rem;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 9999px;
+  --radius-button: 0.875rem;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-surface: #1a1816;
+  --color-surface-dim: #141210;
+  --color-surface-card: #221f1d;
+  --color-surface-elevated: #2a2725;
+
+  --color-on-surface: #ede9e5;
+  --color-on-surface-muted: #a8a29e;
+  --color-on-surface-subtle: #57534e;
+
+  --color-primary-soft: rgba(230, 57, 70, 0.15);
+  --color-accent-soft: rgba(245, 158, 11, 0.12);
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-overlay: rgba(255, 255, 255, 0.04);
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-on-surface-subtle);
+  border-radius: 9999px;
+}
+
+@keyframes pokemon-walk {
+  0% { transform: translateX(-60px); }
+  100% { transform: translateX(calc(100% + 60px)); }
+}
+
+@keyframes pokemon-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes dots-fade {
+  0%, 33% { opacity: 0; }
+  66%, 100% { opacity: 1; }
+}
+
+@keyframes path-dash {
+  to { stroke-dashoffset: 0; }
+}

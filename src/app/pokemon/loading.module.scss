@@ -1,0 +1,114 @@
+.loaderRoot {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 3rem;
+  background-color: var(--color-surface);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.track {
+  position: relative;
+  width: 180px;
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pikachuWrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  will-change: transform;
+  animation: run-cycle 5s linear infinite;
+}
+
+.pikachu {
+  image-rendering: pixelated;
+  animation: hop 0.5s ease-in-out infinite;
+}
+
+.dots {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-on-surface-subtle);
+  opacity: 0.1;
+}
+
+@for $i from 1 through 5 {
+  $start: ($i - 1) * 20%; 
+  $peak_start: $start + 2%; 
+  $peak_end: $start + 40%;   
+  $fade_end: $peak_end + 15%; 
+  
+  @keyframes dot-trail-#{$i} {
+    0%, #{$start} {
+      opacity: 0.1;
+      transform: scale(1);
+      background-color: var(--color-on-surface-subtle);
+      box-shadow: none;
+    }
+    #{$peak_start}, #{$peak_end} {
+      opacity: 1;
+      transform: scale(1.4);
+      background-color: var(--color-accent);
+      box-shadow: 0 0 8px var(--color-accent-soft);
+    }
+    #{$fade_end}, 100% {
+      opacity: 0.1;
+      transform: scale(1);
+      background-color: var(--color-on-surface-subtle);
+      box-shadow: none;
+    }
+  }
+
+  .dot:nth-child(#{$i}) {
+    animation: dot-trail-#{$i} 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes run-cycle {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  80%, 100% {
+    transform: translateX(180px);
+    opacity: 0;
+  }
+}
+
+@keyframes hop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pikachuWrapper, .dot {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
