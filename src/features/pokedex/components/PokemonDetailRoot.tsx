@@ -8,7 +8,7 @@ import { TYPE_COLORS } from "@/features/pokedex/types";
 import { DetailSkeleton } from "./DetailSkeleton";
 import { PokemonProfile } from "./PokemonProfile";
 import { PokemonStats } from "./PokemonStats";
-import { PokemonEvolutionPlaceholder } from "./PokemonEvolutionPlaceholder";
+import { PokemonEvolution } from "./PokemonEvolution";
 
 export function PokemonDetailRoot({ name }: PokemonDetailRootProps) {
   const { data: pokemon, isLoading } = usePokemonDetail(name);
@@ -35,7 +35,7 @@ export function PokemonDetailRoot({ name }: PokemonDetailRootProps) {
           <div className="bg-surface-card/30 border border-border border-dashed rounded-[var(--radius-card)] p-5 flex flex-col items-center justify-center min-h-[300px]">
              <span className="text-on-surface-muted font-medium text-sm">Abilities & Moves (Coming Soon)</span>
           </div>
-          <PokemonEvolutionPlaceholder />
+          <PokemonEvolution name={pokemon.name} />
         </div>
       </div>
     </div>

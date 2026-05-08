@@ -2,6 +2,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { filterPokemonUseCase } from "@/features/pokedex/use-cases/filter-pokemon.use-case";
 import { getPokemonDetailUseCase } from "@/features/pokedex/use-cases/get-pokemon-detail.use-case";
 import { getPokemonListUseCase } from "@/features/pokedex/use-cases/get-pokemon-list.use-case";
+import { getEvolutionChainUseCase } from "@/features/pokedex/use-cases/get-evolution-chain.use-case";
 
 export const usePokemonInfiniteList = () => {
   return useInfiniteQuery({
@@ -58,5 +59,14 @@ export const usePokemonDetail = (name: string) => {
     queryFn: () => getPokemonDetailUseCase(name),
     enabled: !!name,
     staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useEvolutionChain = (name: string) => {
+  return useQuery({
+    queryKey: ["pokemon", "evolution", name],
+    queryFn: () => getEvolutionChainUseCase(name),
+    enabled: !!name,
+    staleTime: 1000 * 60 * 60, // Evolutions rarely change
   });
 };

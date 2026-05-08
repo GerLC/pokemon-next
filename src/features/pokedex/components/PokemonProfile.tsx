@@ -21,11 +21,12 @@ export function PokemonProfile({ pokemon, typeColor }: PokemonProfileProps) {
         />
 
         <Image
-          src={pokemon.artwork}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`}
           alt={pokemon.name}
-          width={400}
-          height={400}
-          className="w-[80%] h-[80%] object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-700"
+          width={300}
+          height={300}
+          className="w-[60%] h-[60%] object-contain drop-shadow-lg [image-rendering:pixelated] group-hover:scale-110 transition-transform duration-500"
+          unoptimized
           priority
         />
 
