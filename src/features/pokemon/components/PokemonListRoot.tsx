@@ -2,8 +2,9 @@
 
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useInView } from "react-intersection-observer";
+import { useDebounce } from "@/lib/hooks/use-debounce";
 import { usePokemonList } from "../hooks/use-pokemon";
 import { PokemonCard } from "./PokemonCard";
 
@@ -14,6 +15,8 @@ export function PokemonListRoot() {
   const [isPending, startTransition] = useTransition();
 
   const currentSearchTerm = searchParams.get("query") ?? "";
+  const [inputValue, setInputValue] = useState(currentSearchTerm);
+
   const {
     fetchNextPage,
     hasNextPage,
@@ -34,7 +37,7 @@ export function PokemonListRoot() {
     },
   });
 
-  const handleSearch = (term: string) => {
+  const debouncedUpdate = useDebounce((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("query", term);
@@ -44,6 +47,12 @@ export function PokemonListRoot() {
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     });
+  }, 400);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    debouncedUpdate(value);
   };
 
   if (
@@ -61,11 +70,11 @@ export function PokemonListRoot() {
           <input
             type="text"
             placeholder="Search Pokémon..."
-            defaultValue={currentSearchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
+            value={inputValue}
+            onChange={handleSearchChange}
             className="w-full bg-surface-card border border-border rounded-[var(--radius-button)] py-4 pl-14 pr-6 text-on-surface placeholder:text-on-surface-subtle focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all text-sm"
           />
-          {isPending && (
+          {(isPending || (isSearching && isSearchingGlobal)) && (
             <div className="absolute right-5">
               <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
             </div>

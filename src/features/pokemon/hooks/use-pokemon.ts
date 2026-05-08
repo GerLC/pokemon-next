@@ -1,9 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getPokemonDetailUseCase } from "../use-cases/get-pokemon-detail.use-case";
 import { getPokemonListUseCase } from "../use-cases/get-pokemon-list.use-case";
+import { filterPokemonUseCase } from "../use-cases/filter-pokemon.use-case";
 
-export const usePokemonList = (searchTerm: string = "") => {
-  const listQuery = useInfiniteQuery({
+export const usePokemonInfiniteList = () => {
+  return useInfiniteQuery({
     queryKey: ["pokemon", "list"],
     queryFn: ({ pageParam = 0 }) => getPokemonListUseCase(pageParam),
     getNextPageParam: (lastPage, allPages) => {
@@ -11,34 +12,47 @@ export const usePokemonList = (searchTerm: string = "") => {
       return allPages.length * 20;
     },
     initialPageParam: 0,
+    staleTime: 1000 * 60 * 5,
   });
+};
 
-  const totalCount = listQuery.data?.pages[0]?.count ?? 0;
-  const allLoaded = listQuery.data?.pages.flatMap((page) => page.results) ?? [];
+export const usePokemonSearch = (searchTerm: string, totalCount: number) => {
+  const isSearching = searchTerm.length > 0;
 
   const globalQuery = useQuery({
     queryKey: ["pokemon", "global", totalCount],
     queryFn: () => getPokemonListUseCase(0, totalCount),
     staleTime: 1000 * 60 * 60,
-    enabled: totalCount > 0,
+    enabled: isSearching && totalCount > 0,
   });
 
-  const isSearching = searchTerm.length > 0;
   const globalData = globalQuery.data?.results ?? [];
+  const filtered = filterPokemonUseCase(globalData, searchTerm);
 
-  const filtered = isSearching
-    ? globalData.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-    : allLoaded;
+  return {
+    filtered,
+    isSearching,
+    isSearchingGlobal: globalQuery.isLoading && isSearching,
+  };
+};
+
+export const usePokemonList = (searchTerm: string = "") => {
+  const listQuery = usePokemonInfiniteList();
+  const totalCount = listQuery.data?.pages[0]?.count ?? 0;
+  const allLoaded = listQuery.data?.pages.flatMap((page) => page.results) ?? [];
+
+  const { filtered, isSearching, isSearchingGlobal } = usePokemonSearch(
+    searchTerm,
+    totalCount,
+  );
 
   return {
     ...listQuery,
     allLoaded,
-    filtered,
+    filtered: isSearching ? filtered : allLoaded,
     totalCount,
     isSearching,
-    isSearchingGlobal: globalQuery.isLoading && isSearching,
+    isSearchingGlobal,
   };
 };
 
