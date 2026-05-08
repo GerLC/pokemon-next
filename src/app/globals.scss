@@ -79,21 +79,7 @@ body {
   border-radius: 9999px;
 }
 
-@keyframes pokemon-walk {
-  0% { transform: translateX(-60px); }
-  100% { transform: translateX(calc(100% + 60px)); }
-}
-
-@keyframes pokemon-bounce {
+@keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
-}
-
-@keyframes dots-fade {
-  0%, 33% { opacity: 0; }
-  66%, 100% { opacity: 1; }
-}
-
-@keyframes path-dash {
-  to { stroke-dashoffset: 0; }
 }

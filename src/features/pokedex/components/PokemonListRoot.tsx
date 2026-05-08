@@ -55,13 +55,6 @@ export function PokemonListRoot() {
     debouncedUpdate(value);
   };
 
-  if (
-    isLoading ||
-    (isSearching && isSearchingGlobal && filtered.length === 0)
-  ) {
-    return <PokemonListSkeleton />;
-  }
-
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-10">
       <div className="relative mb-12 max-w-xl mx-auto">
@@ -136,7 +129,7 @@ function LoadingBounce() {
             key={id}
             className="w-2.5 h-2.5 rounded-full bg-primary"
             style={{
-              animation: `pokemon-bounce 0.6s ease-in-out ${i * 0.15}s infinite`,
+              animation: `bounce 0.6s ease-in-out ${i * 0.15}s infinite`,
             }}
           />
         ))}
@@ -144,34 +137,6 @@ function LoadingBounce() {
       <span className="text-xs text-on-surface-subtle">
         Finding more Pokémon...
       </span>
-    </div>
-  );
-}
-
-function PokemonListSkeleton() {
-  const skeletonIds = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
-  return (
-    <div className="w-full max-w-7xl mx-auto px-6 py-10">
-      <div className="mb-12 max-w-xl mx-auto">
-        <div className="h-14 bg-surface-card border border-border rounded-[var(--radius-button)] animate-pulse" />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {skeletonIds.map((id) => (
-          <div
-            key={id}
-            className="bg-surface-card border border-border rounded-[var(--radius-card)] p-5 animate-pulse"
-          >
-            <div className="flex justify-between mb-4">
-              <div className="h-4 w-10 bg-border rounded" />
-              <div className="w-2 h-2 bg-border rounded-full" />
-            </div>
-            <div className="w-36 h-36 mx-auto mb-4 bg-border/50 rounded-full" />
-            <div className="border-t border-border pt-3">
-              <div className="h-4 w-20 bg-border rounded" />
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
