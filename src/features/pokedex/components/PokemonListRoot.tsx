@@ -21,7 +21,6 @@ export function PokemonListRoot() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
     allLoaded,
     filtered,
     totalCount,

@@ -1,5 +1,5 @@
-import { PokemonListResponseSchema } from "../types/pokemon.schema";
 import { pokemonService } from "../services/pokemon.service";
+import { PokemonListResponseSchema } from "../types/pokemon.schema";
 
 export const getPokemonListUseCase = async (
   offset?: number,

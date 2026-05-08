@@ -1,5 +1,5 @@
-import { PokemonDetailSchema } from "../types/pokemon.schema";
 import { pokemonService } from "../services/pokemon.service";
+import { PokemonDetailSchema } from "../types/pokemon.schema";
 
 export const getPokemonDetailUseCase = async (name: string) => {
   const data = await pokemonService.getDetail(name);
