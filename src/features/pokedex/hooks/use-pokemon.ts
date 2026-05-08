@@ -26,8 +26,8 @@ export const usePokemonSearch = (searchTerm: string, totalCount: number) => {
     enabled: isSearching && totalCount > 0,
   });
 
-  const globalData = globalQuery.data?.results ?? [];
-  const filtered = filterPokemonUseCase(globalData, searchTerm);
+  const allData = globalQuery.data?.results ?? [];
+  const filtered = filterPokemonUseCase(allData, searchTerm);
 
   return {
     filtered,
@@ -36,23 +36,19 @@ export const usePokemonSearch = (searchTerm: string, totalCount: number) => {
   };
 };
 
-export const usePokemonList = (searchTerm: string = "") => {
-  const listQuery = usePokemonInfiniteList();
-  const totalCount = listQuery.data?.pages[0]?.count ?? 0;
-  const allLoaded = listQuery.data?.pages.flatMap((page) => page.results) ?? [];
+export const usePokedex = (searchTerm: string = "") => {
+  const list = usePokemonInfiniteList();
+  const allLoaded = list.data?.pages.flatMap((page) => page.results) ?? [];
+  const totalCount = list.data?.pages[0]?.count ?? 0;
 
-  const { filtered, isSearching, isSearchingGlobal } = usePokemonSearch(
-    searchTerm,
-    totalCount,
-  );
+  const search = usePokemonSearch(searchTerm, totalCount);
 
   return {
-    ...listQuery,
+    ...list,
+    ...search,
     allLoaded,
-    filtered: isSearching ? filtered : allLoaded,
     totalCount,
-    isSearching,
-    isSearchingGlobal,
+    filtered: search.isSearching ? search.filtered : allLoaded,
   };
 };
 

@@ -3,9 +3,9 @@
 import { ArrowLeft, Ruler, Weight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePokemonDetail } from "../hooks/use-pokemon";
-import type { PokemonDetailRootProps } from "../types";
-import { TYPE_COLORS } from "../types";
+import { usePokemonDetail } from "@/features/pokedex/hooks/use-pokemon";
+import type { PokemonDetailRootProps } from "@/features/pokedex/types";
+import { TYPE_COLORS } from "@/features/pokedex/types";
 import { DetailSkeleton } from "./DetailSkeleton";
 import { StatCard } from "./StatCard";
 
