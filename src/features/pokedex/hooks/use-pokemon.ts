@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { filterPokemonUseCase } from "../use-cases/filter-pokemon.use-case";
-import { getPokemonDetailUseCase } from "../use-cases/get-pokemon-detail.use-case";
-import { getPokemonListUseCase } from "../use-cases/get-pokemon-list.use-case";
+import { filterPokemonUseCase } from "@/features/pokedex/use-cases/filter-pokemon.use-case";
+import { getPokemonDetailUseCase } from "@/features/pokedex/use-cases/get-pokemon-detail.use-case";
+import { getPokemonListUseCase } from "@/features/pokedex/use-cases/get-pokemon-list.use-case";
 
 export const usePokemonInfiniteList = () => {
   return useInfiniteQuery({

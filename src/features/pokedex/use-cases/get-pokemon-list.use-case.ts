@@ -1,4 +1,4 @@
-import { PokemonListResponseSchema } from "@/features/shared/schemas/pokemon.schema";
+import { PokemonListResponseSchema } from "../types/pokemon.schema";
 import { pokemonService } from "../services/pokemon.service";
 
 export const getPokemonListUseCase = async (

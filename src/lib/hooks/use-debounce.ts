@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { debounce } from "../utils";
+import { debounce } from "@/lib/utils";
 
 /**
  * Custom hook to debounce a callback.
@@ -7,7 +7,7 @@ import { debounce } from "../utils";
  * Uses useMemo to keep debounced function stable.
  * Uses useEffect ONLY for cleanup on unmount.
  */
-export function useDebounce<T extends (...args: unknown[]) => unknown>(
+export function useDebounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number,
 ) {

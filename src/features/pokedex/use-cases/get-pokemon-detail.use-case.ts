@@ -1,4 +1,4 @@
-import { PokemonDetailSchema } from "@/features/shared/schemas/pokemon.schema";
+import { PokemonDetailSchema } from "../types/pokemon.schema";
 import { pokemonService } from "../services/pokemon.service";
 
 export const getPokemonDetailUseCase = async (name: string) => {

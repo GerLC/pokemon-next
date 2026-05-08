@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
-import { getPokemonDetailUseCase, PokemonDetailRoot } from "@/features/pokemon";
+import { getPokemonDetailUseCase, PokemonDetailRoot } from "@/features/pokedex";
 
 interface PokemonPageProps {
   params: Promise<{ name: string }>;

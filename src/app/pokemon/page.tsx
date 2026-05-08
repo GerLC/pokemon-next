@@ -7,7 +7,7 @@ import {
   getPokemonListUseCase,
   PokemonListHero,
   PokemonListRoot,
-} from "@/features/pokemon";
+} from "@/features/pokedex";
 
 export default async function PokemonListPage() {
   const queryClient = new QueryClient();

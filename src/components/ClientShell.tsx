@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
-import { Header } from "@/features/shared/components/Header";
+import { Header } from "@/components/layout/Header";
 import Providers from "./Providers";
 
 export function ClientShell({ children }: { children: React.ReactNode }) {

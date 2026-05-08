@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { envSchema } from "../schemas/env.schema";
+import { envSchema } from "@/config/env.schema";
 
 const _env = envSchema.safeParse({
   NEXT_PUBLIC_POKEMON_API_BASE_URL:

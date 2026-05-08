@@ -1,4 +1,4 @@
-import { env } from "../../shared/config/env";
+import { env } from "@/config/env";
 
 export const pokemonService = {
   async getList(offset = 0, limit = 20) {
