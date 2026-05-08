@@ -8,7 +8,7 @@ export function PokemonCard({ name, id, imageUrl }: PokemonCardProps) {
 
   return (
     <Link
-      href={`/pokemon/${name}`}
+      href={`/pokedex/${name}`}
       className="group relative bg-surface-card border border-border rounded-[var(--radius-card)] p-5 overflow-hidden hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
     >
       <div className="absolute top-0 right-0 w-24 h-24 bg-accent/0 group-hover:bg-accent/8 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 transition-all duration-500 pointer-events-none" />

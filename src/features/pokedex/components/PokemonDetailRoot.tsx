@@ -21,7 +21,7 @@ export function PokemonDetailRoot({ name }: PokemonDetailRootProps) {
   return (
     <div className="max-w-5xl mx-auto px-6 py-8">
       <Link
-        href="/pokemon"
+        href="/pokedex"
         className="inline-flex items-center gap-2 text-on-surface-muted hover:text-primary transition-colors mb-10 group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
