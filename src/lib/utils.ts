@@ -7,11 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number
+  delay: number,
 ) {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-  const debounced = function (this: any, ...args: Parameters<T>) {
+  const debounced = function (
+    this: ThisParameterType<T>,
+    ...args: Parameters<T>
+  ) {
     if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), delay);
   };

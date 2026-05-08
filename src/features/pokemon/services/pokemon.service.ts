@@ -10,7 +10,9 @@ export const pokemonService = {
   },
 
   async getDetail(name: string) {
-    const res = await fetch(`${env.NEXT_PUBLIC_POKEMON_API_BASE_URL}/pokemon/${name}`);
+    const res = await fetch(
+      `${env.NEXT_PUBLIC_POKEMON_API_BASE_URL}/pokemon/${name}`,
+    );
     if (!res.ok) throw new Error(`Failed to fetch pokemon: ${name}`);
     return await res.json();
   },

@@ -7,9 +7,9 @@ import { debounce } from "../utils";
  * Uses useMemo to keep debounced function stable.
  * Uses useEffect ONLY for cleanup on unmount.
  */
-export function useDebounce<T extends (...args: any[]) => any>(
+export function useDebounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  delay: number
+  delay: number,
 ) {
   const fnRef = useRef(fn);
 
@@ -20,7 +20,7 @@ export function useDebounce<T extends (...args: any[]) => any>(
       debounce((...args: Parameters<T>) => {
         return fnRef.current(...args);
       }, delay),
-    [delay]
+    [delay],
   );
 
   useEffect(() => {
