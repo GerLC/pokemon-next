@@ -35,6 +35,12 @@ export const PokemonDetailSchema = z.object({
       }),
     }),
   ),
+  stats: z.array(
+    z.object({
+      base_stat: z.number(),
+      stat: z.object({ name: z.string() }),
+    })
+  ),
 });
 
 export type PokemonListItem = z.infer<typeof PokemonListItemSchema>;

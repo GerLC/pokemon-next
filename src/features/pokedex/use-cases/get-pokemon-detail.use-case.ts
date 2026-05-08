@@ -14,5 +14,10 @@ export const getPokemonDetailUseCase = async (name: string) => {
       validated.sprites.front_default ??
       "",
     formattedId: `#${String(validated.id).padStart(3, "0")}`,
+    stats: validated.stats.map((s) => ({
+      name: s.stat.name,
+      value: s.base_stat,
+      percentage: Math.min((s.base_stat / 255) * 100, 100),
+    })),
   };
 };
