@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useMoveDetail } from "../hooks/use-move";
 import type { MoveExplorerProps } from "../types";
 import { MoveDetailCard } from "./MoveDetailCard";
+import { formatLabel } from "@/lib/utils";
 
 export function MoveExplorer({
   moves,
@@ -14,17 +15,19 @@ export function MoveExplorer({
   const [search, setSearch] = useState("");
 
   const filteredMoves = moves.filter((move) =>
-    move.toLowerCase().includes(search.toLowerCase()),
+    move.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const [selectedMove, setSelectedMove] = useState<string | null>(
-    moves[0] ?? null,
+    moves[0]?.name ?? null,
   );
   const { data: moveData, isLoading } = useMoveDetail(selectedMove);
+  
+  const selectedMoveMetadata = moves.find((m) => m.name === selectedMove);
 
   return (
     <div className="flex flex-col lg:flex-row gap-16 min-h-[600px]">
-      <div className="w-full lg:w-80 flex flex-col gap-10">
+      <div className="w-full lg:w-96 flex flex-col gap-10">
         <div className="space-y-4">
           <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-muted px-1">
             Abilities
@@ -69,19 +72,26 @@ export function MoveExplorer({
             />
           </div>
 
-          <div className="h-[550px] overflow-y-auto custom-scrollbar pr-2 space-y-1">
+          <div className="h-[550px] overflow-y-auto custom-scrollbar pr-2 space-y-1.5">
             {filteredMoves.map((move) => (
               <button
-                key={move}
+                key={move.name}
                 type="button"
-                onClick={() => setSelectedMove(move)}
-                className={`w-full text-left px-4 py-3 rounded-xl transition-all capitalize text-sm font-bold ${
-                  selectedMove === move
-                    ? "bg-primary text-white shadow-xl shadow-primary/20"
-                    : "text-on-surface-muted hover:bg-white/5"
+                onClick={() => setSelectedMove(move.name)}
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all border-2 capitalize text-sm font-bold ${
+                  selectedMove === move.name
+                    ? "border-primary bg-primary/5 text-on-surface shadow-lg shadow-primary/5"
+                    : "border-transparent text-on-surface-muted hover:bg-white/5 hover:border-white/5"
                 }`}
               >
-                {move}
+                <span className="capitalize">{move.name}</span>
+                <div className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter transition-colors ${
+                  selectedMove === move.name 
+                    ? 'bg-primary text-white' 
+                    : 'bg-white/5 text-on-surface-muted opacity-50'
+                }`}>
+                  {move.method === 'level-up' ? `Lv.${move.level}` : formatLabel(move.method)}
+                </div>
               </button>
             ))}
             {filteredMoves.length === 0 && (
@@ -99,6 +109,8 @@ export function MoveExplorer({
             move={moveData}
             isLoading={isLoading}
             typeColor={typeColor}
+            level={selectedMoveMetadata?.level}
+            method={selectedMoveMetadata?.method}
           />
         </div>
       </div>

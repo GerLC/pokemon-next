@@ -9,6 +9,14 @@ export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export function formatLabel(str: string | undefined | null) {
+  if (!str || str === "-") return "-";
+  return str
+    .split(/[- ]+/)
+    .map((word) => capitalize(word))
+    .join(" ");
+}
+
 export function debounce<T extends (...args: any[]) => unknown>(
   fn: T,
   delay: number,

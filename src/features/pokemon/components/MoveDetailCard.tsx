@@ -1,10 +1,13 @@
 import { Activity, Shield, Sparkles, Swords, Target, Zap } from "lucide-react";
+import { formatLabel } from "@/lib/utils";
 import type { MoveDetailCardProps } from "../types";
 
 export function MoveDetailCard({
   move,
   isLoading,
   typeColor,
+  method,
+  level
 }: MoveDetailCardProps) {
   const isSpecial = move?.damageClass === "special";
   const isStatus = move?.damageClass === "status";
@@ -88,6 +91,14 @@ export function MoveDetailCard({
                     : move?.priority || "-"
               }
               icon={<Activity className="w-5 h-5" />}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-8">
+            <StatBox 
+              label="Origin" 
+              value={method === 'level-up' ? `Level ${level}` : formatLabel(method)} 
+              icon={<Target className="w-5 h-5" />} 
             />
           </div>
 

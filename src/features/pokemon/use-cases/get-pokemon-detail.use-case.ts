@@ -23,6 +23,15 @@ export const getPokemonDetailUseCase = async (name: string) => {
       name: a.ability.name.replace("-", " "),
       isHidden: a.is_hidden,
     })),
-    moves: validated.moves.map((m) => m.move.name.replace("-", " ")),
+    moves: validated.moves
+      .map((m) => {
+        const detail = m.version_group_details[0];
+        return {
+          name: m.move.name.replace("-", " "),
+          level: detail?.level_learned_at ?? 0,
+          method: detail?.move_learn_method.name ?? "unknown",
+        };
+      })
+      .sort((a, b) => a.level - b.level),
   };
 };

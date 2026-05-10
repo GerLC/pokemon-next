@@ -38,6 +38,13 @@ export const PokemonDetailSchema = z.object({
   moves: z.array(
     z.object({
       move: z.object({ name: z.string() }),
+      version_group_details: z.array(
+        z.object({
+          level_learned_at: z.number(),
+          move_learn_method: z.object({ name: z.string() }),
+          version_group: z.object({ name: z.string() }),
+        }),
+      ),
     }),
   ),
 });

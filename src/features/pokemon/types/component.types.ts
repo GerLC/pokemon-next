@@ -33,9 +33,15 @@ export interface PokemonMovesProps {
   typeColor: string;
 }
 
+export interface MoveMetadata {
+  name: string;
+  level: number;
+  method: string;
+}
+
 export interface MoveExplorerProps {
   pokemonName: string;
-  moves: string[];
+  moves: MoveMetadata[];
   abilities: { name: string; isHidden: boolean }[];
   typeColor: string;
 }
@@ -44,6 +50,8 @@ export interface MoveDetailCardProps {
   move: MoveData | null | undefined;
   isLoading: boolean;
   typeColor: string;
+  level?: number;
+  method?: string;
 }
 
 export interface StatBarProps {
