@@ -49,8 +49,16 @@ export const MoveDetailSchema = z.object({
   power: z.number().nullable(),
   pp: z.number(),
   priority: z.number(),
+  effect_chance: z.number().nullable().optional(),
   type: z.object({ name: z.string() }),
   damage_class: z.object({ name: z.string() }),
+  effect_entries: z.array(
+    z.object({
+      effect: z.string(),
+      short_effect: z.string(),
+      language: z.object({ name: z.string() }),
+    }),
+  ),
   flavor_text_entries: z.array(
     z.object({
       flavor_text: z.string(),
