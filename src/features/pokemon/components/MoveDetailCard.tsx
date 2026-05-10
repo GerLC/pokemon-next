@@ -7,7 +7,7 @@ export function MoveDetailCard({
   isLoading,
   typeColor,
   method,
-  level
+  level,
 }: MoveDetailCardProps) {
   const isSpecial = move?.damageClass === "special";
   const isStatus = move?.damageClass === "status";
@@ -95,10 +95,12 @@ export function MoveDetailCard({
           </div>
 
           <div className="grid grid-cols-2 gap-8">
-            <StatBox 
-              label="Origin" 
-              value={method === 'level-up' ? `Level ${level}` : formatLabel(method)} 
-              icon={<Target className="w-5 h-5" />} 
+            <StatBox
+              label="Origin"
+              value={
+                method === "level-up" ? `Level ${level}` : formatLabel(method)
+              }
+              icon={<Target className="w-5 h-5" />}
             />
           </div>
 

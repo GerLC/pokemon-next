@@ -1,8 +1,10 @@
 import { pokemonService } from "../services/pokemon.service";
 import type { EvolutionNode, RawEvolutionNode } from "../types";
 
-
-const flattenEvolutionChain = (node: RawEvolutionNode, list: EvolutionNode[] = []) => {
+const flattenEvolutionChain = (
+  node: RawEvolutionNode,
+  list: EvolutionNode[] = [],
+) => {
   if (!node) return list;
 
   const urlParts = node.species.url.split("/").filter(Boolean);

@@ -2,10 +2,10 @@
 
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { formatLabel } from "@/lib/utils";
 import { useMoveDetail } from "../hooks/use-move";
 import type { MoveExplorerProps } from "../types";
 import { MoveDetailCard } from "./MoveDetailCard";
-import { formatLabel } from "@/lib/utils";
 
 export function MoveExplorer({
   moves,
@@ -22,7 +22,7 @@ export function MoveExplorer({
     moves[0]?.name ?? null,
   );
   const { data: moveData, isLoading } = useMoveDetail(selectedMove);
-  
+
   const selectedMoveMetadata = moves.find((m) => m.name === selectedMove);
 
   return (
@@ -85,12 +85,16 @@ export function MoveExplorer({
                 }`}
               >
                 <span className="capitalize">{move.name}</span>
-                <div className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter transition-colors ${
-                  selectedMove === move.name 
-                    ? 'bg-primary text-white' 
-                    : 'bg-white/5 text-on-surface-muted opacity-50'
-                }`}>
-                  {move.method === 'level-up' ? `Lv.${move.level}` : formatLabel(move.method)}
+                <div
+                  className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter transition-colors ${
+                    selectedMove === move.name
+                      ? "bg-primary text-white"
+                      : "bg-white/5 text-on-surface-muted opacity-50"
+                  }`}
+                >
+                  {move.method === "level-up"
+                    ? `Lv.${move.level}`
+                    : formatLabel(move.method)}
                 </div>
               </button>
             ))}

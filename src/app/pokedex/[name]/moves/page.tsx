@@ -1,9 +1,9 @@
 import { ArrowLeft } from "lucide-react";
-import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { MoveExplorer } from "@/features/pokemon/components/MoveExplorer";
 import { type PokemonPageProps, TYPE_COLORS } from "@/features/pokemon/types";
 import { getPokemonDetailUseCase } from "@/features/pokemon/use-cases/get-pokemon-detail.use-case";
+import { capitalize } from "@/lib/utils";
 
 export default async function PokemonMovesPage({ params }: PokemonPageProps) {
   const { name } = await params;

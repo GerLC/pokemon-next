@@ -80,7 +80,6 @@ export interface RawEvolutionNode {
   evolves_to: RawEvolutionNode[];
 }
 
-
 export interface PokemonPageProps {
   params: Promise<{ name: string }>;
 }
