@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useInView } from "react-intersection-observer";
-import { usePokedex } from "@/features/pokedex/hooks/use-pokemon";
+import { usePokedex } from "@/features/pokedex/hooks/use-pokedex";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 import { PokemonCard } from "./PokemonCard";
 

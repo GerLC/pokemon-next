@@ -1,12 +1,5 @@
+import type { PokemonStatsProps } from "../types";
 import { StatBar } from "./StatBar";
-import type { getPokemonDetailUseCase } from "@/features/pokedex/use-cases/get-pokemon-detail.use-case";
-
-type PokemonData = Awaited<ReturnType<typeof getPokemonDetailUseCase>>;
-
-interface PokemonStatsProps {
-  stats: PokemonData["stats"];
-  typeColor: string;
-}
 
 export function PokemonStats({ stats, typeColor }: PokemonStatsProps) {
   return (

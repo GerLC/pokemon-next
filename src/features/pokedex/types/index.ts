@@ -1,7 +1,3 @@
-export type {
-  PokemonCardProps,
-  PokemonDetailRootProps,
-  StatCardProps,
-} from "@/features/pokedex/types/component.types";
+export type { PokemonCardProps } from "@/features/pokedex/types/component.types";
 
-export { TYPE_COLORS } from "@/features/pokedex/types/type-colors";
+export * from "@/features/pokedex/types/pokedex.schema";

@@ -1,11 +1,11 @@
-import { pokemonService } from "../services/pokemon.service";
-import { PokemonListResponseSchema } from "../types/pokemon.schema";
+import { pokedexService } from "../services/pokedex.service";
+import { PokemonListResponseSchema } from "../types/pokedex.schema";
 
 export const getPokemonListUseCase = async (
   offset?: number,
   limit?: number,
 ) => {
-  const data = await pokemonService.getList(offset, limit);
+  const data = await pokedexService.getList(offset, limit);
   const validated = PokemonListResponseSchema.parse(data);
 
   return {

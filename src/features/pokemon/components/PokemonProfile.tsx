@@ -1,33 +1,43 @@
+"use client";
+
 import { Ruler, Weight } from "lucide-react";
 import Image from "next/image";
-import { TYPE_COLORS } from "@/features/pokedex/types";
+import { useState } from "react";
+import { type PokemonProfileProps, TYPE_COLORS } from "../types";
 import { StatCard } from "./StatCard";
-import type { getPokemonDetailUseCase } from "@/features/pokedex/use-cases/get-pokemon-detail.use-case";
-
-type PokemonData = Awaited<ReturnType<typeof getPokemonDetailUseCase>>;
-
-interface PokemonProfileProps {
-  pokemon: PokemonData;
-  typeColor: string;
-}
 
 export function PokemonProfile({ pokemon, typeColor }: PokemonProfileProps) {
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+
+  const handleImageError = () => {
+    setFailedImages((prev) => {
+      const next = new Set(prev);
+      next.add(pokemon.id);
+      return next;
+    });
+  };
+
+  const imgSrc = failedImages.has(pokemon.id)
+    ? pokemon.artwork
+    : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`;
+
   return (
-    <div className="flex flex-col md:flex-row gap-10 items-start">
-      <div className="w-full md:w-[320px] lg:w-[400px] shrink-0 relative aspect-square flex items-center justify-center rounded-[2rem] bg-surface-card border border-border overflow-hidden group">
+    <div className="flex flex-col md:flex-row gap-10 items-stretch">
+      <div className="w-full md:w-[320px] lg:w-[400px] shrink-0 relative aspect-square md:aspect-auto flex items-center justify-center rounded-[2rem] bg-surface-card border border-border overflow-hidden group">
         <div
           className="absolute inset-0 opacity-10 blur-[80px] pointer-events-none"
           style={{ backgroundColor: typeColor }}
         />
 
         <Image
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`}
+          src={imgSrc}
           alt={pokemon.name}
           width={300}
           height={300}
           className="w-[60%] h-[60%] object-contain drop-shadow-lg [image-rendering:pixelated] group-hover:scale-110 transition-transform duration-500"
           unoptimized
           priority
+          onError={handleImageError}
         />
 
         <div className="absolute top-4 left-4 bg-surface/80 backdrop-blur-sm border border-border px-3 py-1 rounded-full">

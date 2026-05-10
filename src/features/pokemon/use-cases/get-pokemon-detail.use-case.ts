@@ -1,10 +1,10 @@
 import { pokemonService } from "../services/pokemon.service";
-import { PokemonDetailSchema } from "../types/pokemon.schema";
+import { PokemonDetailSchema } from "../types";
 
 export const getPokemonDetailUseCase = async (name: string) => {
   const data = await pokemonService.getDetail(name);
   const validated = PokemonDetailSchema.parse(data);
-
+  
   return {
     ...validated,
     displayHeight: (validated.height / 10).toFixed(1),
