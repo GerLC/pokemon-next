@@ -4,11 +4,11 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
-import { getPokemonDetailUseCase, PokemonDetailRoot } from "@/features/pokemon";
-
-interface PokemonPageProps {
-  params: Promise<{ name: string }>;
-}
+import {
+  getPokemonDetailUseCase,
+  PokemonDetailRoot,
+  PokemonPageProps,
+} from "@/features/pokemon";
 
 export async function generateMetadata({
   params,

@@ -32,11 +32,25 @@ export function PokemonDetailRoot({ name }: PokemonDetailRootProps) {
         <PokemonProfile pokemon={pokemon} typeColor={typeColor} />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <PokemonStats stats={pokemon.stats} typeColor={typeColor} />
-          <div className="bg-surface-card/30 border border-border border-dashed rounded-[var(--radius-card)] p-5 flex flex-col items-center justify-center min-h-[300px]">
-            <span className="text-on-surface-muted font-medium text-sm">
-              Abilities & Moves (Coming Soon)
-            </span>
-          </div>
+          <Link
+            href={`/pokedex/${pokemon.name}/moves`}
+            className="bg-surface-card border border-border rounded-[var(--radius-card)] p-6 flex flex-col items-center justify-center gap-4 group hover:border-primary/50 transition-all cursor-pointer"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <span className="text-2xl">⚡</span>
+            </div>
+            <div className="text-center">
+              <h3 className="text-lg font-bold text-on-surface">
+                Moves & Abilities
+              </h3>
+              <p className="text-sm text-on-surface-muted">
+                Explore all {pokemon.moves.length} moves and hidden abilities.
+              </p>
+            </div>
+            <div className="mt-2 text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+              Open Explorer <ArrowLeft className="w-3 h-3 rotate-180" />
+            </div>
+          </Link>
           <PokemonEvolution name={pokemon.name} />
         </div>
       </div>

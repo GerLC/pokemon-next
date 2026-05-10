@@ -22,4 +22,12 @@ export const pokemonService = {
     if (!res.ok) throw new Error(`Failed to fetch evolution chain`);
     return await res.json();
   },
+
+  async getMove(name: string) {
+    const res = await fetch(
+      `${env.NEXT_PUBLIC_POKEMON_API_BASE_URL}/move/${name}`,
+    );
+    if (!res.ok) throw new Error(`Failed to fetch move: ${name}`);
+    return await res.json();
+  },
 };

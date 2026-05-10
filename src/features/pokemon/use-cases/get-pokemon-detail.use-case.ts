@@ -4,7 +4,7 @@ import { PokemonDetailSchema } from "../types";
 export const getPokemonDetailUseCase = async (name: string) => {
   const data = await pokemonService.getDetail(name);
   const validated = PokemonDetailSchema.parse(data);
-  
+
   return {
     ...validated,
     displayHeight: (validated.height / 10).toFixed(1),
@@ -19,5 +19,10 @@ export const getPokemonDetailUseCase = async (name: string) => {
       value: s.base_stat,
       percentage: Math.min((s.base_stat / 255) * 100, 100),
     })),
+    abilities: validated.abilities.map((a) => ({
+      name: a.ability.name.replace("-", " "),
+      isHidden: a.is_hidden,
+    })),
+    moves: validated.moves.map((m) => m.move.name.replace("-", " ")),
   };
 };
