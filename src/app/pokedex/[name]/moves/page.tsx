@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { MoveExplorer } from "@/features/pokemon/components/MoveExplorer";
 import { type PokemonPageProps, TYPE_COLORS } from "@/features/pokemon/types";
@@ -10,7 +11,7 @@ export default async function PokemonMovesPage({ params }: PokemonPageProps) {
 
   const primaryType = pokemon.types[0]?.type.name ?? "normal";
   const typeColor = TYPE_COLORS[primaryType] ?? TYPE_COLORS.normal;
-  const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+  const capitalizedName = capitalize(name);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">

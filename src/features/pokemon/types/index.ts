@@ -11,6 +11,7 @@ export type {
   PokemonPageProps,
   PokemonProfileProps,
   PokemonStatsProps,
+  RawEvolutionNode,
   StatBarProps,
   StatCardProps,
 } from "./component.types";

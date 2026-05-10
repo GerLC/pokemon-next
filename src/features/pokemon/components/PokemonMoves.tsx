@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import type { PokemonMovesProps } from "../types";
 
-export function PokemonMoves({ moves, typeColor }: PokemonMovesProps) {
+export function PokemonMoves({ moves }: PokemonMovesProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const displayMoves = isExpanded ? moves : moves.slice(0, 12);
 

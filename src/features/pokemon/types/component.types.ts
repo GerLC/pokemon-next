@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { getMoveDetailUseCase } from "../use-cases/get-move-detail.use-case";
 import type { getPokemonDetailUseCase } from "../use-cases/get-pokemon-detail.use-case";
 
@@ -66,6 +66,12 @@ export interface EvolutionNode {
   id: number;
   artwork: string;
 }
+
+export interface RawEvolutionNode {
+  species: { name: string; url: string };
+  evolves_to: RawEvolutionNode[];
+}
+
 
 export interface PokemonPageProps {
   params: Promise<{ name: string }>;

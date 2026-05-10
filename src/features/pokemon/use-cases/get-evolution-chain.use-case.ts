@@ -1,8 +1,8 @@
 import { pokemonService } from "../services/pokemon.service";
-import type { EvolutionNode } from "../types";
+import type { EvolutionNode, RawEvolutionNode } from "../types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const flattenEvolutionChain = (node: any, list: EvolutionNode[] = []) => {
+
+const flattenEvolutionChain = (node: RawEvolutionNode, list: EvolutionNode[] = []) => {
   if (!node) return list;
 
   const urlParts = node.species.url.split("/").filter(Boolean);
