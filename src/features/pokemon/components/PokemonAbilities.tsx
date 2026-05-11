@@ -1,31 +1,20 @@
-import type { PokemonAbilitiesProps } from "../types";
+import { PokemonAbilitiesProps } from "../types/component.types";
 
-export function PokemonAbilities({
-  abilities,
-  typeColor,
-}: PokemonAbilitiesProps) {
+export function PokemonAbilities({ abilities }: PokemonAbilitiesProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface-muted">
+    <div className="space-y-4">
+      <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-muted px-1">
         Abilities
       </h3>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-1 gap-2">
         {abilities.map((ability) => (
           <div
             key={ability.name}
-            className="group relative flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-card border border-border hover:border-primary/30 transition-all cursor-default"
+            className="group px-4 py-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between transition-colors hover:bg-white/10"
           >
-            <div
-              className="w-1.5 h-1.5 rounded-full"
-              style={{
-                backgroundColor: ability.isHidden ? "transparent" : typeColor,
-              }}
-            />
-            <span className="text-xs font-bold capitalize text-on-surface">
-              {ability.name}
-            </span>
+            <span className="text-sm font-bold capitalize">{ability.name}</span>
             {ability.isHidden && (
-              <span className="text-[9px] uppercase tracking-tighter font-black text-on-surface-subtle border border-border px-1.5 rounded-md">
+              <span className="text-[8px] uppercase font-black tracking-widest text-on-surface-muted opacity-50">
                 Hidden
               </span>
             )}

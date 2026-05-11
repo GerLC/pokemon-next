@@ -5,6 +5,19 @@ import type { getPokemonDetailUseCase } from "../use-cases/get-pokemon-detail.us
 export type PokemonData = Awaited<ReturnType<typeof getPokemonDetailUseCase>>;
 export type MoveData = Awaited<ReturnType<typeof getMoveDetailUseCase>>;
 
+export interface PokemonAbilitiesProps {
+  abilities: { name: string; isHidden: boolean }[];
+}
+
+export interface PokemonMoveListProps {
+  moves: MoveMetadata[];
+  selectedMove: string | null;
+  onSelectMove: (name: string) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
+  filteredMoves: MoveMetadata[];
+}
+
 export interface PokemonDetailRootProps {
   name: string;
 }
@@ -21,16 +34,6 @@ export interface PokemonStatsProps {
 
 export interface PokemonEvolutionProps {
   name: string;
-}
-
-export interface PokemonAbilitiesProps {
-  abilities: PokemonData["abilities"];
-  typeColor: string;
-}
-
-export interface PokemonMovesProps {
-  moves: PokemonData["moves"];
-  typeColor: string;
 }
 
 export interface MoveMetadata {
